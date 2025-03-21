@@ -21,16 +21,16 @@
 
   <default>
     <default class="RAW">
-      <joint range="-3.14 3.14"/>
-      <general ctrlrange="-3.14 3.14" gaintype="fixed" biastype="affine" gainprm="2000" biasprm="0 -2000 -200"/>
+      <joint range="-3.14 3.14" frictionloss="0.3"  damping="0.05" />
+      <general ctrlrange="-3.14 3.14" gaintype="fixed" biastype="affine" gainprm="2000" biasprm="0 -2000 -200" />
     </default>
     <default class="PITCH_big">
-      <joint range="-1.4835299 1.4835299"/>
-      <general ctrlrange="-1.4835299 1.4835299" gaintype="fixed" biastype="affine" gainprm="2000" biasprm="0 -2000 -200"/>
+      <joint range="-1.4835299 1.4835299" frictionloss="0.3"  damping="0.05"/>
+      <general ctrlrange="-1.4835299 1.4835299" gaintype="fixed" biastype="affine" gainprm="2000" biasprm="0 -2000 -200" />
     </default>
     <default class="PITCH">
-      <joint range="-1.3089969 1.3089969"/>
-      <general ctrlrange="-1.3089969 1.3089969" gaintype="fixed" biastype="affine" gainprm="2000" biasprm="0 -2000 -200"/>
+      <joint range="-1.3089969 1.3089969" frictionloss="0.3"  damping="0.05"/>
+      <general ctrlrange="-1.3089969 1.3089969" gaintype="fixed" biastype="affine" gainprm="2000" biasprm="0 -2000 -200" />
     </default>
   </default>
 

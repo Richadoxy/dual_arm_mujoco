@@ -19,10 +19,16 @@ mujoco.mj_resetDataKeyframe(model, data, 4)
 mujoco.mj_forward(model, data)
 
 left_pos, _, left_quat = left_arm.fk()
-print(' end_effector_left: ', left_pos, left_quat)
-right_pos, _, right_quat = right_arm.fk()
-print('end_effector_right: ', right_pos, right_quat)
+# print(' end_effector_left: ', left_pos, left_quat)
+# right_pos, _, right_quat = right_arm.fk()
+# print('end_effector_right: ', right_pos, right_quat)
 
+for i in range(4):
+    spi_id = int(i/2)
+    module_id = int(i%2)
+    for j in range(3):
+        index = int(module_id*3+j)
+        print(f'spi_id {spi_id}, index {index} id: {hex(j+0x141)}')
 
 # hull = right_arm.build_workspace_hull()
 #
@@ -32,4 +38,4 @@ print('end_effector_right: ', right_pos, right_quat)
 #     print("点在机械臂的工作空间内")
 # else:
 #     print("点不在机械臂的工作空间内")
-viewer.launch(model,data)
+# viewer.launch(model,data)

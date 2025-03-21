@@ -21,7 +21,7 @@ class SimulationThread(QThread):
     def run(self):
         model = mujoco.MjModel.from_xml_path(xml_path)
         data = mujoco.MjData(model)
-        mujoco.mj_resetDataKeyframe(model, data, 0)
+        mujoco.mj_resetDataKeyframe(model, data, 2)
         mujoco.mj_forward(model, data)
 
         # 初始化位置控制模式
@@ -30,24 +30,23 @@ class SimulationThread(QThread):
         left_arm = Robot_mj(model, data, 7, "end_effector_left")
         num_arm = 2
 
-        right_arm_damp = [0.3, 0.7, 0.2, 0.3, 0.01, 0.02, 0.01]
-        #right_arm_damp = [0.0, 0.0, 0.0, 0.0, 0.00, 0.00, 0.00]
-        left_arm_damp = [0.3, 0.7, 0.2, 0.3, 0.01, 0.02, 0.01]
+        #right_arm_damp = [0.3, 0.7, 0.2, 0.35, 0.01, 0.02, 0.01]
+        right_arm_damp = [0.3, 0.7, 0.2, 0.35, 0.01, 0.01, 0.01]
+        #left_arm_damp = [0.3, 0.7, 0.2, 0.35, 0.01, 0.02, 0.01]
+        left_arm_damp = [0.3, 0.7, 0.2, 0.35, 0.01, 0.01, 0.01]
         with mujoco.viewer.launch_passive(model, data) as viewer:
-            step_time = model.opt.timestep
             step = 0
             damp = [right_arm_damp, left_arm_damp]
             arms = [right_arm, left_arm]
             cg = [0, 0]
             vel = [0, 0]
             while viewer.is_running():
-                for i in range(2):
+                for i in range(num_arm):
                     _,vel[i],_ = arms[i].get_qinfo()
                     cg[i] = arms[i].coriolis_gravity()
                     data.ctrl[arms[i].index] = cg[i] - damp[i] * vel[i]
                     step += 1
                     # 控制仿真速度
-                time.sleep(step_time)
                 mujoco.mj_step(model, data)
                 viewer.sync()
                 for body_id in range(model.nbody):
